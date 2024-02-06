@@ -1,12 +1,12 @@
 name: Build and Deploy
 
-on:
-  workflow_dispatch: {}
+on: [push, workflow_dispatch]
+
 
 env:
   applicationfolder: spring-boot-hello-world-example
-  AWS_REGION: ##region##
-  S3BUCKET: ##s3-bucket## 
+  AWS_REGION: ap-south-1
+  S3BUCKET: code-deploy-stack-webappdeploymentbucket-ugifuwgp7hea
 
 
 jobs:
@@ -58,6 +58,6 @@ jobs:
         role-session-name: GitHub-Action-Role
         aws-region: ${{ env.AWS_REGION }}
     - run: |
-        echo "Deploying branch ${{ env.GITHUB_REF }} to ${{ github.event.inputs.environment }}"
+        echo "Deploying branch ${{ github.ref }} to ${{ github.event.inputs.environment }}"
         commit_hash=`git rev-parse HEAD`
         aws deploy create-deployment --application-name CodeDeployAppNameWithASG --deployment-group-name CodeDeployGroupName --github-location repository=$GITHUB_REPOSITORY,commitId=$commit_hash --ignore-application-stop-failures

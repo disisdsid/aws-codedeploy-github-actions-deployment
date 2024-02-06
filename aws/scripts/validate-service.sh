@@ -1,5 +1,6 @@
 #!/bin/bash
 set -x
+# it will print each command before executing it (-x) and exit on any error (-e). 
 
 NUMBER_OF_ATTEMPTS=10
 SLEEP_TIME=3
